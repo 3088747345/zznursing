@@ -1,14 +1,16 @@
 package com.zzyl.nursing.service.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzyl.nursing.domain.Floor;
 import com.zzyl.nursing.mapper.FloorMapper;
 import com.zzyl.nursing.service.IFloorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
+import com.zzyl.nursing.vo.TreeVo;
 
 /**
  * 楼层Service业务层处理
@@ -17,8 +19,7 @@ import java.util.List;
  * @date 2024-04-26
  */
 @Service
-public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements IFloorService
-{
+public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements IFloorService {
     @Autowired
     private FloorMapper floorMapper;
 
@@ -29,8 +30,7 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
      * @return 楼层
      */
     @Override
-    public Floor selectFloorById(Long id)
-    {
+    public Floor selectFloorById(Long id) {
         return getById(id);
     }
 
@@ -41,8 +41,7 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
      * @return 结果
      */
     @Override
-    public int insertFloor(Floor floor)
-    {
+    public int insertFloor(Floor floor) {
         return save(floor) ? 1 : 0;
     }
 
@@ -53,8 +52,7 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
      * @return 结果
      */
     @Override
-    public int updateFloor(Floor floor)
-    {
+    public int updateFloor(Floor floor) {
         return updateById(floor) ? 1 : 0;
     }
 
@@ -65,8 +63,7 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
      * @return 结果
      */
     @Override
-    public int deleteFloorByIds(Long[] ids)
-    {
+    public int deleteFloorByIds(Long[] ids) {
         return removeByIds(Arrays.asList(ids)) ? 1 : 0;
     }
 
@@ -77,8 +74,7 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
      * @return 结果
      */
     @Override
-    public int deleteFloorById(Long id)
-    {
+    public int deleteFloorById(Long id) {
         return removeById(id) ? 1 : 0;
     }
 
@@ -90,4 +86,11 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
         return floorMapper.selectAllByNur();
     }
 
+    /**
+     * 按照状态查询楼层房间床位-树形结构
+     */
+    @Override
+    public List<TreeVo> getRoomAndBedByBedStatus(Integer status) {
+        return floorMapper.getRoomAndBedByBedStatus(status);
+    }
 }

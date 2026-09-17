@@ -1,8 +1,9 @@
 package com.zzyl.nursing.service;
 
 import java.util.List;
-import com.zzyl.nursing.domain.NursingLevel;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzyl.nursing.domain.NursingLevel;
 import com.zzyl.nursing.vo.NursingLevelVo;
 
 /**
@@ -11,8 +12,7 @@ import com.zzyl.nursing.vo.NursingLevelVo;
  * @author alexis
  * @date 2025-06-02
  */
-public interface INursingLevelService extends IService<NursingLevel>
-{
+public interface INursingLevelService extends IService<NursingLevel> {
     /**
      * 查询护理等级
      * 
@@ -63,8 +63,16 @@ public interface INursingLevelService extends IService<NursingLevel>
 
     /**
      * 查询护理等级Vo列表
-     * @param nursingLevel  条件
-     * @return  结果
+     * 
+     * @param nursingLevel 条件
+     * @return 结果
      */
     List<NursingLevelVo> selectNursingLevelVoList(NursingLevel nursingLevel);
+
+    /**
+     * 查询所有护理等级
+     * 
+     * @return 结果
+     */
+    List<NursingLevel> listAll();
 }

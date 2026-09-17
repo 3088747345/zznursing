@@ -1,10 +1,10 @@
 package com.zzyl.nursing.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzyl.nursing.domain.Room;
 import com.zzyl.nursing.vo.RoomVo;
-
-import java.util.List;
 
 /**
  * 房间Service接口
@@ -12,8 +12,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-04-26
  */
-public interface IRoomService extends IService<Room>
-{
+public interface IRoomService extends IService<Room> {
     /**
      * 查询房间
      *
@@ -56,6 +55,7 @@ public interface IRoomService extends IService<Room>
 
     /**
      * 根据楼层 id 获取房间视图对象列表
+     * 
      * @param floorId
      * @return
      */
@@ -63,8 +63,17 @@ public interface IRoomService extends IService<Room>
 
     /**
      * 获取所有房间（负责老人）
+     * 
      * @param floorId
      * @return
      */
     List<RoomVo> getRoomsWithNurByFloorId(Long floorId);
+
+    /**
+     * 按照房间id查询楼层、房间、价格
+     * 
+     * @param id
+     * @return
+     */
+    public RoomVo getRoomById(Long id);
 }

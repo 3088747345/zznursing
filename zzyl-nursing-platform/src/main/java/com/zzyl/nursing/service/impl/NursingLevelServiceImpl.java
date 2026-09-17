@@ -2,14 +2,16 @@ package com.zzyl.nursing.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
-import com.zzyl.common.utils.DateUtils;
-import com.zzyl.nursing.vo.NursingLevelVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.zzyl.nursing.mapper.NursingLevelMapper;
-import com.zzyl.nursing.domain.NursingLevel;
-import com.zzyl.nursing.service.INursingLevelService;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zzyl.nursing.domain.NursingLevel;
+import com.zzyl.nursing.mapper.NursingLevelMapper;
+import com.zzyl.nursing.service.INursingLevelService;
+import com.zzyl.nursing.vo.NursingLevelVo;
 
 /**
  * 护理等级Service业务层处理
@@ -18,8 +20,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @date 2025-06-02
  */
 @Service
-public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel> implements INursingLevelService
-{
+public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel>
+        implements INursingLevelService {
     @Autowired
     private NursingLevelMapper nursingLevelMapper;
 
@@ -30,8 +32,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 护理等级
      */
     @Override
-    public NursingLevel selectNursingLevelById(Long id)
-    {
+    public NursingLevel selectNursingLevelById(Long id) {
         return getById(id);
     }
 
@@ -42,8 +43,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 护理等级
      */
     @Override
-    public List<NursingLevel> selectNursingLevelList(NursingLevel nursingLevel)
-    {
+    public List<NursingLevel> selectNursingLevelList(NursingLevel nursingLevel) {
         return nursingLevelMapper.selectNursingLevelList(nursingLevel);
     }
 
@@ -54,8 +54,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 结果
      */
     @Override
-    public int insertNursingLevel(NursingLevel nursingLevel)
-    {
+    public int insertNursingLevel(NursingLevel nursingLevel) {
         return save(nursingLevel) ? 1 : 0;
     }
 
@@ -66,8 +65,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 结果
      */
     @Override
-    public int updateNursingLevel(NursingLevel nursingLevel)
-    {
+    public int updateNursingLevel(NursingLevel nursingLevel) {
         return updateById(nursingLevel) ? 1 : 0;
     }
 
@@ -78,8 +76,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 结果
      */
     @Override
-    public int deleteNursingLevelByIds(Long[] ids)
-    {
+    public int deleteNursingLevelByIds(Long[] ids) {
         return removeByIds(Arrays.asList(ids)) ? 1 : 0;
     }
 
@@ -90,8 +87,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
      * @return 结果
      */
     @Override
-    public int deleteNursingLevelById(Long id)
-    {
+    public int deleteNursingLevelById(Long id) {
         return removeById(id) ? 1 : 0;
     }
 
@@ -104,5 +100,18 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
     @Override
     public List<NursingLevelVo> selectNursingLevelVoList(NursingLevel nursingLevel) {
         return nursingLevelMapper.selectNursingLevelVoList(nursingLevel);
+    }
+
+    /**
+     * 查询所有护理等级
+     * 
+     * @return 结果
+     */
+    @Override
+    public List<NursingLevel> listAll() {
+        LambdaQueryWrapper<NursingLevel> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(NursingLevel::getStatus, 1);
+        List<NursingLevel> list = list(queryWrapper);
+        return list;
     }
 }

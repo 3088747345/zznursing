@@ -1,5 +1,18 @@
 package com.zzyl.nursing.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.zzyl.common.annotation.Log;
 import com.zzyl.common.core.controller.BaseController;
 import com.zzyl.common.core.domain.AjaxResult;
@@ -7,14 +20,11 @@ import com.zzyl.common.core.domain.R;
 import com.zzyl.common.enums.BusinessType;
 import com.zzyl.nursing.domain.Floor;
 import com.zzyl.nursing.service.IFloorService;
+import com.zzyl.nursing.vo.TreeVo;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 楼层Controller
@@ -24,9 +34,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/elder/floor")
-@Api(tags =  "楼层相关接口")
-public class FloorController extends BaseController
-{
+@Api(tags = "楼层相关接口")
+public class FloorController extends BaseController {
     @Autowired
     private IFloorService floorService;
 
@@ -36,8 +45,7 @@ public class FloorController extends BaseController
     @PreAuthorize("@ss.hasPermi('elder:floor:list')")
     @GetMapping("/list")
     @ApiOperation("查询所有楼层列表")
-    public R<List<Floor>> list()
-    {
+    public R<List<Floor>> list() {
         List<Floor> list = floorService.list();
         return R.ok(list);
     }
@@ -48,8 +56,7 @@ public class FloorController extends BaseController
     @PreAuthorize("@ss.hasPermi('elder:floor:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取楼层详细信息")
-    public R<Floor> getInfo(@ApiParam(value = "楼层ID", required = true) @PathVariable("id") Long id)
-    {
+    public R<Floor> getInfo(@ApiParam(value = "楼层ID", required = true) @PathVariable("id") Long id) {
         return R.ok(floorService.selectFloorById(id));
     }
 
@@ -60,8 +67,7 @@ public class FloorController extends BaseController
     @Log(title = "楼层", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增楼层")
-    public AjaxResult add(@ApiParam(value = "楼层信息", required = true)  @RequestBody Floor floor)
-    {
+    public AjaxResult add(@ApiParam(value = "楼层信息", required = true) @RequestBody Floor floor) {
         return toAjax(floorService.insertFloor(floor));
     }
 
@@ -72,8 +78,7 @@ public class FloorController extends BaseController
     @PreAuthorize("@ss.hasPermi('elder:floor:edit')")
     @Log(title = "楼层", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@ApiParam(value = "楼层信息", required = true) @RequestBody Floor floor)
-    {
+    public AjaxResult edit(@ApiParam(value = "楼层信息", required = true) @RequestBody Floor floor) {
         return toAjax(floorService.updateFloor(floor));
     }
 
@@ -84,8 +89,7 @@ public class FloorController extends BaseController
     @PreAuthorize("@ss.hasPermi('elder:floor:remove')")
     @Log(title = "楼层", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@ApiParam(value = "楼层ID", required = true) @PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@ApiParam(value = "楼层ID", required = true) @PathVariable Long[] ids) {
         return toAjax(floorService.deleteFloorByIds(ids));
     }
 
@@ -93,6 +97,17 @@ public class FloorController extends BaseController
     @ApiOperation(value = "获取所有楼层 (负责老人)", notes = "无需参数，获取所有楼层，返回楼层信息列表")
     public R<List<Floor>> getAllFloorsWithNur() {
         List<Floor> list = floorService.selectAllByNur();
+        return R.ok(list);
+    }
+
+    /**
+     * 按照状态查询楼层房间床位-树形结构
+     */
+    @GetMapping("/getRoomAndBedByBedStatus/{status}")
+    @ApiOperation("按照状态查询楼层房间床位-树形结构")
+    public R<List<TreeVo>> getRoomAndBedByBedStatus(
+            @ApiParam(value = "床位状态(未入住0, 已入住1)", required = true) @PathVariable("status") Integer status) {
+        List<TreeVo> list = floorService.getRoomAndBedByBedStatus(status);
         return R.ok(list);
     }
 }

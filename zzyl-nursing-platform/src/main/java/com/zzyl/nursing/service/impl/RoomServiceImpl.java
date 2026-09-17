@@ -1,15 +1,16 @@
 package com.zzyl.nursing.service.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzyl.nursing.domain.Room;
 import com.zzyl.nursing.mapper.RoomMapper;
 import com.zzyl.nursing.service.IRoomService;
 import com.zzyl.nursing.vo.RoomVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 房间Service业务层处理
@@ -88,7 +89,6 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
         return roomMapper.selectByFloorId(floorId);
     }
 
-
     /**
      * 获取所有房间（负责老人）
      *
@@ -98,5 +98,16 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
     @Override
     public List<RoomVo> getRoomsWithNurByFloorId(Long floorId) {
         return roomMapper.selectByFloorIdWithNur(floorId);
+    }
+
+    /**
+     * 按照房间id查询楼层、房间、价格
+     * 
+     * @param id
+     * @return
+     */
+    @Override
+    public RoomVo getRoomById(Long id) {
+        return roomMapper.getRoomById(id);
     }
 }

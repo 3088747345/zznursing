@@ -1,9 +1,10 @@
 package com.zzyl.nursing.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzyl.nursing.domain.Floor;
-
-import java.util.List;
+import com.zzyl.nursing.vo.TreeVo;
 
 /**
  * 楼层Service接口
@@ -11,8 +12,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-04-26
  */
-public interface IFloorService extends IService<Floor>
-{
+public interface IFloorService extends IService<Floor> {
     /**
      * 查询楼层
      *
@@ -55,7 +55,16 @@ public interface IFloorService extends IService<Floor>
 
     /**
      * 查询所有楼层（负责老人）
+     * 
      * @return
      */
     List<Floor> selectAllByNur();
+
+    /**
+     * 按照状态查询楼层房间床位-树形结构
+     * 
+     * @param status
+     * @return
+     */
+    public List<TreeVo> getRoomAndBedByBedStatus(Integer status);
 }

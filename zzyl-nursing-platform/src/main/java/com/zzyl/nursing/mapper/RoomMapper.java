@@ -1,11 +1,12 @@
 package com.zzyl.nursing.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzyl.nursing.domain.Room;
 import com.zzyl.nursing.vo.RoomVo;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * 房间Mapper接口
@@ -14,8 +15,7 @@ import java.util.List;
  * @date 2024-04-26
  */
 @Mapper
-public interface RoomMapper extends BaseMapper<Room>
-{
+public interface RoomMapper extends BaseMapper<Room> {
     /**
      * 查询房间
      *
@@ -67,4 +67,12 @@ public interface RoomMapper extends BaseMapper<Room>
     List<RoomVo> selectByFloorId(Long floorId);
 
     List<RoomVo> selectByFloorIdWithNur(Long floorId);
+
+    /**
+     * 按照房间id查询楼层、房间、价格
+     * 
+     * @param id
+     * @return
+     */
+    public RoomVo getRoomById(Long id);
 }
