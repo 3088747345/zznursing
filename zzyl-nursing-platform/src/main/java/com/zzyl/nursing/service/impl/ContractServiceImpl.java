@@ -1,5 +1,6 @@
 package com.zzyl.nursing.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import com.zzyl.common.utils.DateUtils;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.zzyl.nursing.mapper.ContractMapper;
 import com.zzyl.nursing.domain.Contract;
 import com.zzyl.nursing.service.IContractService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
@@ -17,8 +19,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @date 2026-09-17
  */
 @Service
-public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> implements IContractService
-{
+public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> implements IContractService {
     @Autowired
     private ContractMapper contractMapper;
 
@@ -29,8 +30,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 合同
      */
     @Override
-    public Contract selectContractById(Long id)
-    {
+    public Contract selectContractById(Long id) {
         return getById(id);
     }
 
@@ -41,8 +41,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 合同
      */
     @Override
-    public List<Contract> selectContractList(Contract contract)
-    {
+    public List<Contract> selectContractList(Contract contract) {
         return contractMapper.selectContractList(contract);
     }
 
@@ -53,8 +52,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 结果
      */
     @Override
-    public int insertContract(Contract contract)
-    {
+    public int insertContract(Contract contract) {
         return save(contract) ? 1 : 0;
     }
 
@@ -65,8 +63,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 结果
      */
     @Override
-    public int updateContract(Contract contract)
-    {
+    public int updateContract(Contract contract) {
         return updateById(contract) ? 1 : 0;
     }
 
@@ -77,8 +74,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 结果
      */
     @Override
-    public int deleteContractByIds(Long[] ids)
-    {
+    public int deleteContractByIds(Long[] ids) {
         return removeByIds(Arrays.asList(ids)) ? 1 : 0;
     }
 
@@ -89,8 +85,27 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      * @return 结果
      */
     @Override
-    public int deleteContractById(Long id)
-    {
+    public int deleteContractById(Long id) {
         return removeById(id) ? 1 : 0;
+    }
+
+    /**
+     * 更新合同状态
+     */
+    @Override
+    public void updateContractStatus() {
+        // 1.查询状态为0的合同 && 合同开始时间小于等于当前时间
+        List<Contract> list = list(Wrappers.<Contract>lambdaQuery()
+                .eq(Contract::getStatus, 0)
+                .le(Contract::getStartDate, LocalDateTime.now())
+                .ge(Contract::getEndDate, LocalDateTime.now()));
+
+        // 2.修改状态为1
+        list.forEach(item -> {
+            item.setStatus(1);
+        });
+
+        // 3.批量更新
+        updateBatchById(list);
     }
 }

@@ -1,8 +1,9 @@
 package com.zzyl.nursing.service;
 
 import java.util.List;
-import com.zzyl.nursing.domain.Contract;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzyl.nursing.domain.Contract;
 
 /**
  * 合同Service接口
@@ -10,8 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author chen
  * @date 2026-09-17
  */
-public interface IContractService extends IService<Contract>
-{
+public interface IContractService extends IService<Contract> {
     /**
      * 查询合同
      * 
@@ -59,4 +59,9 @@ public interface IContractService extends IService<Contract>
      * @return 结果
      */
     public int deleteContractById(Long id);
+
+    /**
+     * 更新合同状态
+     */
+    void updateContractStatus();
 }

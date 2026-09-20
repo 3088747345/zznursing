@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "RuoYiApplication",
+            "request": "launch",
+            "mainClass": "com.zzyl.RuoYiApplication",
+            "projectName": "zzyl-admin",
+            "vmArgs": "-Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
+        }
+    ]
+}
