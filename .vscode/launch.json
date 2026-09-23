@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "IDCardUtils",
+            "request": "launch",
+            "mainClass": "com.zzyl.common.utils.IDCardUtils",
+            "projectName": "zzyl-common"
+        },
+        {
+            "type": "java",
             "name": "RuoYiApplication",
             "request": "launch",
             "mainClass": "com.zzyl.RuoYiApplication",

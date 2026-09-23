@@ -140,3 +140,9 @@ aliyun:
 
 dept:
   nursingId: 201
+
+# DeepSeek 官方大模型配置
+deepseek:
+  apiKey:  # 真实 Key 还是要注意防泄漏哦喵~
+  baseUrl: https://api.deepseek.com
+  model: deepseek-flash # 填这个就能直接用上最新的 V4.1-Flash 啦喵！

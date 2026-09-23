@@ -1,4 +1,5 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.debug.settings.console": "internalConsole"
+    "java.debug.settings.console": "internalConsole",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
