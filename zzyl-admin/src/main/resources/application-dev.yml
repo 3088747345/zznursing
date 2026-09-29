@@ -203,3 +203,8 @@ deepseek:
   apiKey:  # 真实 Key 还是要注意防泄漏哦喵~
   baseUrl: https://api.deepseek.com
   model: deepseek-flash # 填这个就能直接用上最新的 V4.1-Flash 啦喵！
+
+# 微信小程序配置
+wechat:
+  appId: wxe7aba63412b0df49
+  appSecret: ade01eabb8dde63a8c36b9b5d0410b8a
