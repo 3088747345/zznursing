@@ -208,3 +208,15 @@ deepseek:
 wechat:
   appId: wxe7aba63412b0df49
   appSecret: ade01eabb8dde63a8c36b9b5d0410b8a
+huaweicloud:
+  ak: HPUA0ANZZ0KXTSJTPBIQ
+  sk: ICJUTPGg994jkD4BXs68MBTQqyJDiITayL6YTQ06
+  #如果是上海一，请填写"cn-east-3"；如果是北京四，请填写"cn-north-4";
+  regionId: cn-north-4
+  endpoint: 20478766eb.st1.iotda-app.cn-north-4.myhuaweicloud.com
+  projectId: 01a0ece7212e70458ae14b900985d992
+  #amqp相关配置 下一章课程接收设备数据使用
+  host: 20478766eb.st1.iotda-app.cn-north-4.myhuaweicloud.com
+  accessKey: kjXuQA60
+  accessCode: PUaa4bSwxuh4DNfDs91vyOHmrNJyMQ7a
+  queueName: DefaultQueue   #默认无需改动
