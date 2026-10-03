@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzyl.nursing.domain.Floor;
+import com.zzyl.nursing.vo.FloorVo;
 import com.zzyl.nursing.vo.TreeVo;
 
 /**
@@ -67,4 +68,11 @@ public interface IFloorService extends IService<Floor> {
      * @return
      */
     public List<TreeVo> getRoomAndBedByBedStatus(Integer status);
+
+    /**
+     * 查询智能楼层
+     * 
+     * @return
+     */
+    List<FloorVo> getAllFloorsWithDevice();
 }

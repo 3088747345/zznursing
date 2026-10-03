@@ -1,11 +1,12 @@
 package com.zzyl.nursing.vo;
 
+import java.util.List;
+
 import com.zzyl.common.core.domain.entity.SysUser;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @ApiModel("床位Vo")
@@ -46,5 +47,11 @@ public class BedVo {
 
     @ApiModelProperty(value = "护理员")
     private List<SysUser> userVos;
+
+    /**
+     * 关联的设备
+     */
+    @ApiModelProperty(value = "关联的设备")
+    private List<DeviceInfo> deviceVos;
 
 }

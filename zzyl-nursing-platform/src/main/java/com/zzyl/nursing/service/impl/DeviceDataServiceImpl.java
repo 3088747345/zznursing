@@ -6,10 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.ObjectUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -31,6 +32,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONUtil;
 
 /**
  * 设备数据Service业务层处理
@@ -45,6 +47,9 @@ public class DeviceDataServiceImpl extends ServiceImpl<DeviceDataMapper, DeviceD
 
     @Autowired
     private DeviceMapper deviceMapper;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 查询设备数据
@@ -182,6 +187,7 @@ public class DeviceDataServiceImpl extends ServiceImpl<DeviceDataMapper, DeviceD
             properties.forEach((k, v) -> {
                 DeviceData deviceData = BeanUtil.toBean(device, DeviceData.class);
                 deviceData.setId(null);
+                deviceData.setCreateTime(null);
                 deviceData.setAlarmTime(eventTime);
                 deviceData.setFunctionId(k);
                 deviceData.setDataValue(v + "");
@@ -189,6 +195,8 @@ public class DeviceDataServiceImpl extends ServiceImpl<DeviceDataMapper, DeviceD
             });
             // 批量保存设备数据
             saveBatch(list);
+
+            redisTemplate.opsForHash().put("iot:device_last_data", device.getIotId(), JSONUtil.toJsonStr(list));
         });
     }
 }
