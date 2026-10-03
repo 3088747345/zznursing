@@ -32,7 +32,14 @@
             <groupId>com.zzyl</groupId>
             <artifactId>zzyl-framework</artifactId>
         </dependency>
-        
+
+        <!-- amqp 1.0 qpid client -->
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-jms-client</artifactId>
+            <version>0.61.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
