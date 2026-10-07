@@ -1,9 +1,12 @@
 package com.zzyl.nursing.mapper;
 
 import java.util.List;
-import com.zzyl.nursing.domain.Device;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zzyl.nursing.domain.Device;
 
 /**
  * 设备Mapper接口
@@ -12,8 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2026-09-30
  */
 @Mapper
-public interface DeviceMapper extends BaseMapper<Device>
-{
+public interface DeviceMapper extends BaseMapper<Device> {
     /**
      * 查询设备
      * 
@@ -61,4 +63,20 @@ public interface DeviceMapper extends BaseMapper<Device>
      * @return 结果
      */
     public int deleteDeviceByIds(Long[] ids);
+
+    /**
+     * 根据随身设备id查询老人关联的护理人员id列表
+     * 
+     * @param iotId 设备id
+     * @return 护理人员列表
+     */
+    List<Long> selectNursingIdsByIotIdWithElder(@Param("iotId") String iotId);
+
+    /**
+     * 根据固定设备id查询老人关联的护理人员id列表
+     * 
+     * @param iotId 设备id
+     * @return 护理人员列表
+     */
+    List<Long> selectNursingIdsByIotIdWithBed(@Param("iotId") String iotId);
 }

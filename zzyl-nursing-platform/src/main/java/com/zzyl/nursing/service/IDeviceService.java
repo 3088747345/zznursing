@@ -100,4 +100,12 @@ public interface IDeviceService extends IService<Device> {
      * 删除设备
      */
     public void deleteDeviceByIotId(String iotId);
+
+    /**
+     * 查询产品详情
+     * 
+     * @param productKey
+     * @return
+     */
+    AjaxResult queryProduct(String productKey);
 }

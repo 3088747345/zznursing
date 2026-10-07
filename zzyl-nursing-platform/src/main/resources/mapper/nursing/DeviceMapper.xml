@@ -123,4 +123,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectNursingIdsByIotIdWithElder" resultType="java.lang.Long">
+        select ne.nursing_id
+        from device d
+                 left join nursing_elder ne on ne.elder_id = d.binding_location
+        where d.location_type = 0
+          and d.iot_id = #{iotId}
+    </select>
+    <select id="selectNursingIdsByIotIdWithBed" resultType="java.lang.Long">
+        select ne.nursing_id
+        from device d
+                 left join elder e on e.bed_id = d.binding_location
+                 left join nursing_elder ne on ne.elder_id = e.id
+        where d.location_type = 1 and d.physical_location_type = 2
+          and d.iot_id = #{iotId}
+    </select>
 </mapper>

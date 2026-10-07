@@ -183,4 +183,16 @@ public class DeviceController extends BaseController {
         deviceService.deleteDeviceByIotId(iotId);
         return success();
     }
+
+    /**
+     * 查询产品详情
+     * 
+     * @param productKey
+     * @return
+     */
+    @GetMapping("/queryProduct/{productKey}")
+    @ApiOperation(value = "查询产品详情")
+    public AjaxResult queryProduct(@PathVariable String productKey) {
+        return deviceService.queryProduct(productKey);
+    }
 }

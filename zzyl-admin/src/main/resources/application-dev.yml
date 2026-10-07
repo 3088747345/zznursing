@@ -220,3 +220,6 @@ huaweicloud:
   accessKey: kjXuQA60
   accessCode: PUaa4bSwxuh4DNfDs91vyOHmrNJyMQ7a
   queueName: DefaultQueue   #默认无需改动
+alert:
+    deviceMaintainerRole: 维修工
+    managerRole: 超级管理员

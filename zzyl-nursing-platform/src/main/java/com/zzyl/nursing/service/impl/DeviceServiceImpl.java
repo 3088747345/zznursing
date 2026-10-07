@@ -25,10 +25,13 @@ import com.huaweicloud.sdk.iotda.v5.model.DeviceShadowData;
 import com.huaweicloud.sdk.iotda.v5.model.DeviceShadowProperties;
 import com.huaweicloud.sdk.iotda.v5.model.ListProductsRequest;
 import com.huaweicloud.sdk.iotda.v5.model.ListProductsResponse;
+import com.huaweicloud.sdk.iotda.v5.model.ServiceCapability;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceRequest;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceResponse;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceShadowRequest;
 import com.huaweicloud.sdk.iotda.v5.model.ShowDeviceShadowResponse;
+import com.huaweicloud.sdk.iotda.v5.model.ShowProductRequest;
+import com.huaweicloud.sdk.iotda.v5.model.ShowProductResponse;
 import com.huaweicloud.sdk.iotda.v5.model.UpdateDevice;
 import com.huaweicloud.sdk.iotda.v5.model.UpdateDeviceRequest;
 import com.zzyl.common.core.domain.AjaxResult;
@@ -372,6 +375,36 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device> impleme
         }
         // 2. 再删除本地数据库中的设备信息
         remove(Wrappers.<Device>lambdaQuery().eq(Device::getIotId, iotId));
+    }
+
+    /**
+     * 查询产品详情
+     * 
+     * @param productKey
+     * @return
+     */
+    @Override
+    public AjaxResult queryProduct(String productKey) {
+        // 参数校验
+        if (StringUtils.isEmpty(productKey)) {
+            throw new BaseException("请输入正确的参数");
+        }
+        // 调用华为云IOT平台接口
+        ShowProductRequest showProductRequest = new ShowProductRequest();
+        showProductRequest.setProductId(productKey);
+        ShowProductResponse response;
+
+        try {
+            response = client.showProduct(showProductRequest);
+        } catch (Exception e) {
+            throw new BaseException("查询产品详情失败");
+        }
+        // 判断是否存在服务数据
+        List<ServiceCapability> serviceCapabilities = response.getServiceCapabilities();
+        if (CollUtil.isEmpty(serviceCapabilities)) {
+            return AjaxResult.success(Collections.emptyList());
+        }
+        return AjaxResult.success(serviceCapabilities);
     }
 
 }

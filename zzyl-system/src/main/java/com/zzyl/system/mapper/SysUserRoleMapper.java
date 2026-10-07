@@ -1,7 +1,10 @@
 package com.zzyl.system.mapper;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import com.zzyl.system.domain.SysUserRole;
 
 /**
@@ -9,8 +12,7 @@ import com.zzyl.system.domain.SysUserRole;
  * 
  * @author ruoyi
  */
-public interface SysUserRoleMapper
-{
+public interface SysUserRoleMapper {
     /**
      * 通过用户ID删除用户和角色关联
      * 
@@ -54,9 +56,18 @@ public interface SysUserRoleMapper
     /**
      * 批量取消授权用户角色
      * 
-     * @param roleId 角色ID
+     * @param roleId  角色ID
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
     public int deleteUserRoleInfos(@Param("roleId") Long roleId, @Param("userIds") Long[] userIds);
+
+    /**
+     * 根据角色名称查询用户id列表
+     * 
+     * @param roleName 角色名称
+     * @return 用户id列表
+     */
+    @Select("select sur.user_id from sys_user_role sur left join sys_role sr on sur.role_id = sr.role_id where sr.role_name = #{roleName}")
+    List<Long> selectUserIdByRoleName(String roleName);
 }
